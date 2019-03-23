@@ -2,51 +2,60 @@ class CalcController {
 
     constructor() {
 
-        this._displayCalcEl = document.querySelector("#display");
-        this._dateEl = document.querySelector("#data");
-        this._timeEl = document.querySelector("#hora");
-        
+        this._displayCalc = document.querySelector("#display");
+        this._date = document.querySelector("#data");
+        this._time = document.querySelector("#hora");
+        this._locale = "pt-BR"
         this._currentDate;
         this.initialize();
-        
-
     }
 
     // metodo para inciar a calculadora
     initialize() {
 
-        //innerHTML manipula o DOM e insere um valor no HTML
-        
-        
+        this.setDisplayDateTime();
 
+        setInterval(() => { // função executada em um intervalo de tempo, marcada em milesegundos
+            
+            this.setDisplayDateTime();
+
+        }, 1000);
     }
 
-    get displayDateEl() {
-        return this._dateEl.innerHTML
+    setDisplayDateTime () {
+
+        this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+        });
+        this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
     }
 
-    set displayDateEl(value) {
-        this._timeEl.innerHTML = value;
+    get displayDate() {
+        return this._date.innerHTML
     }
 
-    get displayTimeEl() {
-
-        return his._timeEl.innerHTML;
+    set displayDate(value) {
+        this._date.innerHTML = value;
     }
 
-    set displayTimeEl (value) {
+    get displayTime() {
 
-        his._timeEl.innerHTML = value;
+        return this._time.innerHTML;
+    }
+
+    set displayTime (value) {
+
+        this._time.innerHTML = value;
     } 
 
-    
-    
     get displayCalc() {
-        return this._displayCalcEl.innerHTML;
+        return this._displayCalc.innerHTML;
     }
 
     set displayCalc(value) {
-        this._displayCalcEl.innerHTML = value;
+        this._displayCalc.innerHTML = value;
     }
 
     get currentDate() {
