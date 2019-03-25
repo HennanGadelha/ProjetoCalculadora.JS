@@ -8,6 +8,7 @@ class CalcController {
         this._locale = "pt-BR"
         this._currentDate;
         this.initialize();
+        this.initButtonsEvents();
     }
 
     // metodo para inciar a calculadora
@@ -20,7 +21,18 @@ class CalcController {
             this.setDisplayDateTime();
 
         }, 1000);
+
+        
     }
+
+    addEventListenerAll(element, events, fn) {
+
+        events.split(" ").forEach(event => {
+
+            element.addEventListener(event, fn, false);
+        })
+
+    }  
 
     setDisplayDateTime () {
 
@@ -30,6 +42,28 @@ class CalcController {
             year: "numeric"
         });
         this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+    }
+
+    initButtonsEvents () {
+
+       let buttons = document.querySelectorAll("#buttons > g, #parts > g");
+
+       buttons.forEach(btn=>{
+
+            this.addEventListenerAll(btn, "click drag", e=> {
+
+                console.log(btn.className.baseVal.replace("btn-",""));
+
+            })
+
+            this.addEventListenerAll(btn, "mouseover mouseup mousedown", e=>{
+
+                btn.style.cursor = "pointer";
+
+            })
+
+ 
+       })
     }
 
     get displayDate() {
