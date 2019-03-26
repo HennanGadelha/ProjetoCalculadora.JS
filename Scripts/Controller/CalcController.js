@@ -60,14 +60,14 @@ class CalcController {
     }
 
     getLastOperation() {
-        //metodo p/ pegar a ultima posiçao do array e concatenar no array "operation"
+        //metodo p/ pegar o ultimo item do array e concatenar no array "operation"
 
         return this._operation[this._operation.length-1];
     }
 
     isOperator(value) {
 
-       return (["+", "-", "*", "/", "%"].indexOf(value) >-1);
+       return (["+", "-", "*", "/", "%"].indexOf(value) > -1);
 
     }
 
@@ -76,40 +76,74 @@ class CalcController {
 
         this._operation[this._operation.length -1] = value;
     }
+
+    calc(value){
+
+        let last = this._operation.pop();
+
+        let result = eval(this._operation.join(""));
+
+        this._operation = [result, last];
+
+        //console.log("R", this._operation);
+
+
+    }
+    pushOperation(value) {
+
+        this._operation.push(value);
+
+        if(this._operation.length > 3){
+
+           
+
+            this.calc();
+
+            console.log(this._operation);
+        }
+    }
    
+    setLastNumberToDisplay(value){
+
+
+
+    }
+
+
     addOperation(value){
 
-
-
         if(isNaN(this.getLastOperation())){
-            //string
-
+            
             if(this.isOperator(value)) {
-
+                
                 this.setLastOperation(value);
+
             } else if (isNaN(value)) {
 
-
-                console.log(value);
+               
+                console.log("outra coisa", value);
             } else {
-
-                this._operation.push(value);
+                
+                this.pushOperation(value);
 
             }
+            } else {
+            
+                if(this.isOperator(value)){
 
+                    this.pushOperation(value);
 
+                }else {
 
-        } else {
-            //number
+                    let newValue = this.getLastOperation().toString() + value.toString();
+                    this.setLastOperation(parseInt(newValue));
+                    //atuualizar display
 
-            let newValue = this.getLastOperation().toString() + value.toString();
-            this.setLastOperation(parseInt(newValue));
-
+                    setLastNumberToDisplay();
+                }
         }
 
-        console.log(this._operation);
-
-
+        //console.log(this._operation);
     }
 
     execBtn(value) {
@@ -122,7 +156,7 @@ class CalcController {
             break;
 
             case "ce":
-                clearEntry();
+                this.clearEntry();
             break;
 
             case "soma":
