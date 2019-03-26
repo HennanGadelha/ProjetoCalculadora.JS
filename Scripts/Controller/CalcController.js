@@ -59,11 +59,56 @@ class CalcController {
         this.displayCalc = "ERROR";
     }
 
+    getLastOperation() {
+        //metodo p/ pegar a ultima posiçao do array e concatenar no array "operation"
+
+        return this._operation[this._operation.length-1];
+    }
+
+    isOperator(value) {
+
+       return (["+", "-", "*", "/", "%"].indexOf(value) >-1);
+
+    }
+
+    setLastOperation (value) {
+
+
+        this._operation[this._operation.length -1] = value;
+    }
+   
     addOperation(value){
 
-        this._operation.push(value);
+
+
+        if(isNaN(this.getLastOperation())){
+            //string
+
+            if(this.isOperator(value)) {
+
+                this.setLastOperation(value);
+            } else if (isNaN(value)) {
+
+
+                console.log(value);
+            } else {
+
+                this._operation.push(value);
+
+            }
+
+
+
+        } else {
+            //number
+
+            let newValue = this.getLastOperation().toString() + value.toString();
+            this.setLastOperation(parseInt(newValue));
+
+        }
 
         console.log(this._operation);
+
 
     }
 
@@ -73,45 +118,42 @@ class CalcController {
         switch (value) {
 
             case "ac":
-
                 this.clearAll();
-
             break;
 
             case "ce":
-
                 clearEntry();
-
             break;
 
             case "soma":
-
+                this.addOperation("+");
 
             break;
 
             case "subtracao":
-
+                this.addOperation("-");
 
             break;
 
             case "divisao":
-
-
+                this.addOperation("/");
             break;
 
             case "multiplicaçao":
-
-
+                this.addOperation("*");
             break;
 
             case "porcento":
-
-
+                this.addOperation("%");
             break;
 
             case "igual":
 
 
+            break;
+
+            case "ponto":
+                this.addOperation(".");
             break;
 
             case "0":
