@@ -87,6 +87,7 @@ class CalcController {
 
         //console.log("R", this._operation);
 
+        this.setLastNumberToDisplay();
 
     }
     pushOperation(value) {
@@ -105,7 +106,19 @@ class CalcController {
    
     setLastNumberToDisplay(value){
 
+        let lastNumber;
 
+        for(let i = this._operation.length-1; i >=0; i--){
+
+            if(!this.isOperator(this._operation[i])) {
+
+                lastNumber = this._operation[i];
+                break;
+            }
+
+        }
+
+        this.displayCalc = lastNumber;
 
     }
 
@@ -125,7 +138,7 @@ class CalcController {
             } else {
                 
                 this.pushOperation(value);
-
+                this.setLastNumberToDisplay();
             }
             } else {
             
@@ -139,7 +152,7 @@ class CalcController {
                     this.setLastOperation(parseInt(newValue));
                     //atuualizar display
 
-                    setLastNumberToDisplay();
+                    this.setLastNumberToDisplay();
                 }
         }
 
