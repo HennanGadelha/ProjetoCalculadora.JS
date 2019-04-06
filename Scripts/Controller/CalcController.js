@@ -4,13 +4,14 @@ class CalcController {
 
         this._lastOperator = "";
         this._lastNumber = "";
-
+        this._audioOnOf = false;
         this._operation = [];
         this._displayCalc = document.querySelector("#display");
         this._date = document.querySelector("#data");
         this._time = document.querySelector("#hora");
         this._locale = "pt-BR";
         this._currentDate;
+        this._audio = new Audio("click.mp3");
         this.initialize();
         this.initButtonsEvents();
         this.setLastNumberToDisplay();
@@ -31,9 +32,31 @@ class CalcController {
         this.pasteFromClipboard();
         this.setLastNumberToDisplay();
 
+        document.querySelectorAll(".btn-ac").forEach(btn =>{
+
+            btn.addEventListener("dblclick", e=> {
+
+                this.toglleAudio()
+            });
+        })
+
     }
     
 
+
+    toglleAudio(){
+
+        this._audioOnOf = !this._audioOnOf;
+    }
+    
+    playAudio(){
+
+        if(this._audioOnOf){
+
+            this._audio.currentTime = 0;
+            this._audio.play();
+        } 
+    }
     pasteFromClipboard(){
 
         document.addEventListener("paste", e=>{
@@ -65,7 +88,7 @@ class CalcController {
 
         document.addEventListener("keyup", e=>{
 
-            //console.log(e.key);
+            this.playAudio();
 
             switch (e.key) {
 
@@ -320,6 +343,7 @@ class CalcController {
     }
     execBtn(value) {
 
+        this.playAudio();
 
         switch (value) {
 
