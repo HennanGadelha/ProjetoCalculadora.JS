@@ -14,6 +14,7 @@ class CalcController {
         this.initialize();
         this.initButtonsEvents();
         this.setLastNumberToDisplay();
+        this.initKeyboard();
     }
 
    
@@ -30,6 +31,56 @@ class CalcController {
 
     }
     
+
+    initKeyboard(){
+
+        document.addEventListener("keyup", e=>{
+
+            //console.log(e.key);
+
+            switch (e.key) {
+
+                case "Escape":
+                    this.clearAll();
+                break;
+    
+                case "Backespace":
+                    this.clearEntry();
+                break;
+    
+                case "+":
+                case "-":
+                case "/":
+                case "*":
+                case "%":
+                    this.addOperation(e.key);
+                    break;
+    
+                case "Enter":
+                case "=":
+                    this.calc();
+                    break;
+    
+                case ".":
+                case ",":
+                    this.addDot();
+                    break;
+    
+                case "0":
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+                   this.addOperation(e.key);
+                break;
+            }
+        })
+    }
     addEventListenerAll(element, events, fn) {
         //metodo usado para tratar mais de um evento
         events.split(" ").forEach(event => {
